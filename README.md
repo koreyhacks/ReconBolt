@@ -1,145 +1,152 @@
 # ReconBolt ⚡
-![2025-03-09 22_36_31-KALI  Running  - Oracle VirtualBox _ 1](https://github.com/user-attachments/assets/2c5b23ac-8ca2-41a5-9207-aa4763604457)
+
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.6+-blue.svg" alt="Python Version">
+  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
+  <img src="https://img.shields.io/badge/platform-Linux%20%7C%20Kali-lightgrey.svg" alt="Platform">
+  <img src="https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg" alt="Maintained">
+</p>
 
 A lightning-fast, all-in-one reconnaissance automation tool for ethical hackers and penetration testers. ReconBolt combines the power of multiple reconnaissance tools into a single, efficient utility.
-<br>
-<br>
-🔋 Features
-<br>
-**Integrated Toolset**: Seamlessly combines `nmap`, `whois`, `dnsrecon`, and `subfinder` in one tool
-<br>
-**Parallel Execution**: Optional concurrent scanning for significantly faster results
-<br>
-**Comprehensive Reporting**: Generates both detailed and summary reports in multiple formats
-<br>
-**Automated Analysis**: Extracts and highlights the most relevant information from scan results
-<br>
-**Interactive Banner**: Features a dynamic, flashing banner for a professional look and feel
-<br>
-**Easy to Use**: Simple interface with sensible defaults for quick deployment
-<br>
-<br>
-💻 Installation
-<br>
-Prerequisites:
-<br>
+
+## 🔋 Features
+
+- **Integrated Toolset**: Seamlessly combines `nmap`, `whois`, `dnsrecon`, and `subfinder` in one tool
+- **Parallel Execution**: Optional concurrent scanning for significantly faster results
+- **Comprehensive Reporting**: Generates both detailed and summary reports in multiple formats
+- **Automated Analysis**: Extracts and highlights the most relevant information from scan results
+- **Interactive Banner**: Features a dynamic, flashing banner for a professional look and feel
+- **Easy to Use**: Simple interface with sensible defaults for quick deployment
+
+## 💻 Installation
+
+### Prerequisites
+
 ReconBolt requires Python 3.6+ and the following tools:
-<br>
+
 - nmap
 - whois
 - dnsrecon
 - subfinder
-<br>
-<br>
-Quick Setup for Kali Linux:
-<br>
+
+### Quick Setup for Kali Linux
+
 Most dependencies are pre-installed on Kali. If anything is missing:
-<br>
-Install core dependencies:
-<br>
+
+```bash
+# Install core dependencies
 sudo apt update
-<br>
-sudo apt install -y python3 
-<br>
-python3-pip nmap whois dnsrecon
-<br>
-Install subfinder (apt install subfinder [may have to use sudo])
-<br>
-<br>
-Installing ReconBolt:
-<br>
-Clone the repository:
+sudo apt install -y python3 python3-pip nmap whois dnsrecon
+
+# Install subfinder (if not already installed)
+GO111MODULE=on go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+```
+
+### Installing ReconBolt
+
+```bash
+# Clone the repository
 git clone https://github.com/koreyhacks/reconbolt.git
-<br>
 cd reconbolt
-<br>
-Make executable:
-<br>
+
+# Make executable
 chmod +x reconbolt.py
-<br>
-<br>
-🚀 Usage
-<br>
-Basic Usage:
-<br>
-python3 reconbolt.py example.com (or target IP)
-<br>
-<br>
-Command Options:
 
-![2025-03-09 22_24_05-Claude](https://github.com/user-attachments/assets/a9e5acc5-1abb-4eca-8936-cbb9bb4275bf)
+# Optional: Install globally
+sudo ln -s $(pwd)/reconbolt.py /usr/local/bin/reconbolt
+```
 
-<br>
-<br>
-Examples:
-<br>
-Basic Scan:
-<br>
+## 🚀 Usage
+
+### Basic Usage
+
+```bash
 python3 reconbolt.py example.com
-<br>
-Parallel scan with 8 threads:
-<br>
+```
+
+### Command Options
+
+```
+usage: reconbolt.py [-h] [-o OUTPUT] [-t THREADS] [-p] [-v] target
+
+ReconBolt - A comprehensive reconnaissance automation tool
+
+positional arguments:
+  target                Target domain or IP address
+
+optional arguments:
+  -h, --help            Show this help message and exit
+  -o OUTPUT, --output OUTPUT
+                        Output directory name (default: recon_results)
+  -t THREADS, --threads THREADS
+                        Number of concurrent threads (default: 4)
+  -p, --parallel        Run tools in parallel mode
+  -v, --verbose         Enable verbose output
+```
+
+### Examples
+
+**Basic scan:**
+```bash
+python3 reconbolt.py example.com
+```
+
+**Parallel scan with 8 threads:**
+```bash
 python3 reconbolt.py example.com -p -t 8
-<br>
-Custom output directory:
-<br>
+```
+
+**Custom output directory:**
+```bash
 python3 reconbolt.py example.com -o my_target_recon
-<br>
-Verbose output:
-<br>
+```
+
+**Verbose output:**
+```bash
 python3 reconbolt.py example.com -v
-<br>
-<br>
-📊 Output
-<br>
+```
+
+## 📊 Output
+
 ReconBolt creates a timestamped directory with the following structure:
-<br>
-<br>
+
+```
 recon_results_YYYYMMDD_HHMMSS/
-<br>
-├── dnsrecon_output.txt            # DNS reconnaissance results
-<br>
-├── nmap_output.txt                # Nmap scan output
-<br>
-├── nmap_scan.nmap                 # Nmap scan in .nmap format
-<br>
-├── results.json                   # All results in JSON format
-<br>
-├── subfinder_results.txt          # Discovered subdomains
-<br>
-├── summary_report.txt             # Human-readable summary
-<br>
-└── whois_output.txt               # WHOIS lookup information
-<br>
-<br>
-🔍 Tool Integration Details:
-<br>
+├── dnsrecon_output.txt     # DNS reconnaissance results
+├── nmap_output.txt         # Nmap scan output
+├── nmap_scan.nmap          # Nmap scan in .nmap format
+├── results.json            # All results in JSON format
+├── subfinder_results.txt   # Discovered subdomains
+├── summary_report.txt      # Human-readable summary
+└── whois_output.txt        # WHOIS lookup information
+```
+
+## 🔍 Tool Integration Details
+
 ReconBolt leverages the following tools:
-<br>
-**Nmap**: Network mapping, port scanning, service detection, and OS fingerprinting
-<br>
-**Whois**: Domain registration information lookup
-<br>
-**DNSRecon**: DNS enumeration, zone transfers, and record queries
-<br>
-**Subfinder**: Fast passive subdomain enumeration
-<br>
-<br>
-🛡️ Ethical Use Notice
-<br>
+
+- **Nmap**: Network mapping, port scanning, service detection, and OS fingerprinting
+- **Whois**: Domain registration information lookup
+- **DNSRecon**: DNS enumeration, zone transfers, and record queries
+- **Subfinder**: Fast passive subdomain enumeration
+
+## 🛡️ Ethical Use Notice
+
 This tool is designed for **ethical hacking and penetration testing purposes only**. Always ensure you:
-<br>
+
 1. Have explicit permission to scan targets
-<br>
 2. Comply with all applicable laws and regulations
-<br>
 3. Follow responsible disclosure practices
-<br>
 4. Only scan systems you own or are authorized to test
-<br>
-<br>
-👨‍💻 Author
-<br>
+
+## 👨‍💻 Author
+
 Created by **koreyhacks_**
-<br>
+
 *For educational purposes only. Use responsibly.*
+
+---
+
+<p align="center">
+  <sub>⚡ Fast. Efficient. Comprehensive. ⚡</sub>
+</p>
